@@ -13,11 +13,11 @@ RUN npm install
 # Copier le reste des fichiers de l'application dans le répertoire de travail
 COPY . .
 
-# Construire l'application Next.js
+# Construire l'application Next.js pour la production
 RUN npm run build
 
 # Exposer le port sur lequel l'application Next.js sera accessible
 EXPOSE 3000
 
-# Démarrer l'application Next.js
+# Démarrer l'application Next.js en mode production
 CMD ["npm", "start"]
