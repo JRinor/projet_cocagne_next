@@ -1,0 +1,9 @@
+Réalisation Back-office 1
+Concevoir l’interface permettant de créer les tournées de livraison. Sur une carte dessiner l’itinéraire de la tournée en fonction des dépôts sélectionnés faisant partie de cette livraison.
+Sélectionner une tournée en filtrant par exemple par jour de livraison, puis choisir la tournée. Ajouter les points de dépôts de manière ordonnée afin de définir un itinéraire. Dans le cahier des charges vous avez pu noter l'utilisation de couleur pour les tournées.
+
+Réalisation Back-office 2 pour groupe insertion professionnelle
+Concevoir l’interface permettant de spécifier les calendriers de livraison en fonction de la tournée et des fréquences des paniers. Suivant le cahier des charge, le calendrier doit prendre en compte les semaines d'ouvertures et les jours fériés. Il faut aussi tenir compte de la fréquence et/ou du nombre de paniers annuel et définir les jours de livraisons, tournée par tournée. Le système doit être capable de proposer les jours en fonctions des contraintes puis l'utilisateur doit pouvoir modifier la proposition. Par exemple un panier les mardis, toutes les 2 semaines, en prenant en compte les semaines de fermeture et le décalage si on tombe sur un jour férié.
+
+Réalisation Front Office pour groupe insertion professionnelle
+Concevoir le tunnel de commande permettant à un adhérent de choisir un abonnement, un dépôt et les dates souhaitées de livraison. il n'y a pas de difficulté particulière. C'est la qualité de l'interface qui sera notée.
