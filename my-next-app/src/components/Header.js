@@ -1,78 +1,86 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import routes from '../config/routes';
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import routes from "../config/routes";
 
-const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const router = useRouter();
 
+  // Gestion des clics externes pour fermer le menu
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    router.push('/');
-  };
+    if (isMenuOpen) {
+      window.addEventListener("click", handleClickOutside);
+    } else {
+      window.removeEventListener("click", handleClickOutside);
+    }
+
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, [isMenuOpen]);
 
   return (
-    <header className="bg-blue-900 text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-2xl font-semibold">
-          <a href="/" className="hover:text-blue-300">MonLogo</a>
-        </div>
-
-        {/* Navigation Links */}
-        <nav>
-          <ul className="flex space-x-6">
-            {routes.map(route => (
-              <li key={route.path}>
-                <a href={route.path} className="hover:text-blue-300">{route.name}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* User Account */}
-        <div className="relative">
-          {isLoggedIn ? (
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-              >
-                Mon compte
-              </button>
-              {showDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-20">
-                  <a
-                    href="/mon-espace"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Mon espace
-                  </a>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Déconnexion
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <a href="/login" className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-              Se connecter
-            </a>
-          )}
-        </div>
+    <header className="absolute top-0 left-0 flex justify-between items-center px-8 py-4 w-full z-10 text-white font-serif bg-transparent">
+      {/* Logo avec redirection vers l'accueil */}
+      <div
+        className="text-3xl font-bold cursor-pointer"
+        onClick={() => router.push("/")}
+      >
+        JC
       </div>
+
+      {/* Bouton du menu hamburger */}
+      <button
+        className="md:hidden text-4xl"
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsMenuOpen(!isMenuOpen);
+        }}
+        aria-label="Toggle menu"
+      >
+        ☰
+      </button>
+
+      {/* Boîte de navigation */}
+      <div
+        ref={menuRef}
+        className={`fixed top-0 right-0 h-full w-2/3 bg-red-900 bg-opacity-90 text-white transform transition-transform duration-300 ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        } z-50 md:hidden flex flex-col justify-center items-center`}
+      >
+        <nav className="flex flex-col gap-8 text-center">
+          {routes.map((route) => (
+            <button
+              key={route.path}
+              className="text-2xl font-light tracking-wide hover:text-green-400 transition-all"
+              onClick={() => {
+                router.push(route.path);
+                setIsMenuOpen(false);
+              }}
+            >
+              {route.name}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {/* Navigation classique pour les grands écrans */}
+      <nav className="hidden md:flex gap-10">
+        {routes.map((route) => (
+          <button
+            key={route.path}
+            className="text-lg font-serif tracking-wide hover:text-green-400 transition-colors"
+            onClick={() => router.push(route.path)}
+          >
+            {route.name}
+          </button>
+        ))}
+      </nav>
     </header>
   );
-};
-
-export default Header;
+}
