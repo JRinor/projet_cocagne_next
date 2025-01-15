@@ -5,9 +5,9 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copier les fichiers package.json et package-lock.json dans le répertoire de travail
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-# Installer les dépendances de développement
+# Installer les dépendances
 RUN npm install
 
 # Copier le reste des fichiers de l'application dans le répertoire de travail
@@ -16,5 +16,5 @@ COPY . .
 # Exposer le port sur lequel l'application Next.js sera accessible
 EXPOSE 3000
 
-# Démarrer l'application Next.js en mode développement avec turbopack (si activé dans votre package.json)
-CMD ["npm", "run", "dev"]
+# Démarrer le serveur Express
+CMD ["node", "server.js"]

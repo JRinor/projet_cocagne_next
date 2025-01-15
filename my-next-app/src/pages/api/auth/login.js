@@ -2,6 +2,38 @@ import pool from 'lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Authentification de l'utilisateur
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               mot_de_passe:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Authentification réussie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       401:
+ *         description: Email ou mot de passe incorrect
+ *       500:
+ *         description: Erreur serveur
+ */
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, mot_de_passe } = req.body;

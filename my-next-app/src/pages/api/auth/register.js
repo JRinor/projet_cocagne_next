@@ -1,6 +1,50 @@
 import pool from 'lib/db';
 import bcrypt from 'bcrypt';
 
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Inscription de l'utilisateur
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nom:
+ *                 type: string
+ *               prenom:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               mot_de_passe:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Inscription réussie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id_user:
+ *                   type: integer
+ *                 nom:
+ *                   type: string
+ *                 prenom:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ *       500:
+ *         description: Erreur serveur
+ */
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { nom, prenom, email, mot_de_passe, role } = req.body;

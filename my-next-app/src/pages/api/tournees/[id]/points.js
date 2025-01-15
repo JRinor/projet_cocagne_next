@@ -1,5 +1,48 @@
 import pool from 'lib/db';
 
+/**
+ * @swagger
+ * /tournees/{id}/points:
+ *   post:
+ *     summary: Mettre à jour les points de dépôt d'une tournée
+ *     tags: [Tournees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la tournée
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 ID_PointDeDepot:
+ *                   type: integer
+ *                 numero_ordre:
+ *                   type: integer
+ *     responses:
+ *       200:
+ *         description: Points de dépôt mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Les points doivent être un tableau
+ *       404:
+ *         description: La tournée avec l'ID spécifié n'existe pas
+ *       500:
+ *         description: Erreur serveur
+ */
 export default async function handler(req, res) {
   const { id } = req.query; // ID de la tournée
 

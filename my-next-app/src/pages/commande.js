@@ -8,6 +8,7 @@ const Commande = () => {
     id_point_de_depot: '',
     quantite: 1,
     date_livraison: '',
+    statut: 'en attente',
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -106,6 +107,20 @@ const Commande = () => {
             onChange={(e) => setCommande({ ...commande, date_livraison: e.target.value })}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="statut" className="block text-sm font-medium text-gray-700">Statut</label>
+          <select
+            id="statut"
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            value={commande.statut}
+            onChange={(e) => setCommande({ ...commande, statut: e.target.value })}
+          >
+            <option value="en attente">En attente</option>
+            <option value="en cours">En cours</option>
+            <option value="livrée">Livrée</option>
+            <option value="annulée">Annulée</option>
+          </select>
         </div>
         <button
           type="submit"
