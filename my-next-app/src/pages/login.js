@@ -26,36 +26,63 @@ export default function Login() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Se connecter</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="motDePasse" className="block text-sm font-medium text-gray-700">Mot de passe</label>
-          <input
-            type="password"
-            id="motDePasse"
-            value={motDePasse}
-            onChange={(e) => setMotDePasse(e.target.value)}
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Se connecter
-        </button>
-      </form>
+    <div
+      className="h-screen w-screen bg-cover bg-center flex items-center justify-center"
+      style={{
+        backgroundImage: "url('/img/image1.jpg')",
+      }}
+    >
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center text-green-700 mb-6">
+          🌸 Bienvenue 🌸
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="relative mb-6">
+            <label htmlFor="email" className="text-sm font-medium text-green-700">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Entrez votre email"
+              className="appearance-none bg-transparent border border-green-300 rounded-md w-full text-green-700 pl-2 py-2 shadow-sm focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <div className="relative mb-6">
+            <label htmlFor="motDePasse" className="text-sm font-medium text-green-700">
+              Mot de passe
+            </label>
+            <input
+              type="password"
+              id="motDePasse"
+              value={motDePasse}
+              onChange={(e) => setMotDePasse(e.target.value)}
+              placeholder="Entrez votre mot de passe"
+              className="appearance-none bg-transparent border border-green-300 rounded-md w-full text-green-700 pl-2 py-2 shadow-sm focus:ring-2 focus:ring-green-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md shadow-lg transition duration-300"
+          >
+            Se connecter
+          </button>
+        </form>
+        <p className="text-center text-sm text-green-700 mt-6">
+          Pas encore de compte ?{' '}
+          <button
+            onClick={() => router.push('/register')}
+            className="text-green-500 hover:text-green-600 font-medium"
+          >
+            Inscrivez-vous
+          </button>
+        </p>
+      </div>
     </div>
   );
 }
+
