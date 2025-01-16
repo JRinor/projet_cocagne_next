@@ -25,6 +25,10 @@ jobs:
       run: npm install
       working-directory: ./my-next-app
 
-    - name: Run tests
-      run: npm test
+    - name: Build project
+      run: npm run build
+      working-directory: ./my-next-app
+
+    - name: Run unit tests
+      run: npm run test:unit
       working-directory: ./my-next-app
