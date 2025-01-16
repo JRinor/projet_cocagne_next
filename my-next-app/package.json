@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "echo \"Error: no test specified\" && exit 1" // Ajoutez cette ligne
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",
