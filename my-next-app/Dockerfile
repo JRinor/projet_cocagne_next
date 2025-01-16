@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installer les dépendances
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copier le reste des fichiers de l'application dans le répertoire de travail
 COPY . .
@@ -16,5 +16,5 @@ COPY . .
 # Exposer le port sur lequel l'application Next.js sera accessible
 EXPOSE 3000
 
-# Démarrer le serveur Express
-CMD ["node", "server.js"]
+# Démarrer le serveur Next.js
+CMD ["npm", "run", "dev"]

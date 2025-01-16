@@ -13,7 +13,7 @@ services:
     volumes:
       - ./my-next-app:/app
       - /app/node_modules
-    command: node server.js
+    command: npm run dev
 
   db:
     image: postgres:15
