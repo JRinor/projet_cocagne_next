@@ -88,8 +88,8 @@ export default async function handler(req, res) {
       for (const { ID_PointDeDepot, numero_ordre } of points) {
         console.log('Ajout du point', ID_PointDeDepot, 'avec l\'ordre', numero_ordre);
         await pool.query(
-          'INSERT INTO Tournee_PointDeDepot (ID_Tournee, ID_PointDeDepot, numero_ordre) VALUES ($1, $2, $3)',
-          [id, ID_PointDeDepot, numero_ordre]
+          'INSERT INTO Tournee_PointDeDepot (ID_Tournee, ID_PointDeDepot, numero_ordre, ID_Statut) VALUES ($1, $2, $3, $4)',
+          [id, ID_PointDeDepot, numero_ordre, 1] // Assurez-vous que le statut par défaut est défini
         );
       }
 
