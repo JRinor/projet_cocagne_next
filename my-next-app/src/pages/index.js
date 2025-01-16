@@ -1,18 +1,21 @@
-import Head from 'next/head';
+import Header from '../components/Header';
 
 export default function Home() {
   return (
-    <div>
-      {/* Head section for metadata */}
-      <Head>
-        <title>Page d'Accueil</title>
-        <meta name="description" content="Page d'accueil de mon projet" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      {/* Main Content */}
-      <h1 className="text-3xl font-bold text-blue-900">Bienvenue sur ma page d'accueil</h1>
-      <p className="text-lg mt-4 text-gray-700">Explorez nos services et découvrez ce que nous proposons.</p>
+    <div className="relative">
+      <main
+        className="h-screen w-screen bg-cover bg-center"
+        style={{ backgroundImage: "url('/img/image1.jpg')" }}
+      >
+        <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50">
+          <h1 className="text-6xl font-serif text-white drop-shadow-lg shadow-black text-center">
+            Jardins de Cocagne
+          </h1>
+          <p className="text-xl text-white mt-4 drop-shadow-md shadow-black text-center flex items-center gap-2">
+            <span>🌱</span> Du bio, local et solidaire à votre portée !
+          </p>
+        </div>
+      </main>
     </div>
   );
 }

@@ -98,24 +98,27 @@ export default async function handler(req, res) {
     try {
       let query = 'SELECT * FROM Tournee WHERE 1=1';
       let params = [];
+      let paramIndex = 1;
 
       if (jour_livraison) {
-        query += ' AND jour_livraison = $1';
+        query += ` AND jour_livraison = $${paramIndex++}`;
         params.push(jour_livraison);
       }
 
       if (statut) {
-        query += ' AND statut_tournee = $2';
+        query += ` AND statut_tournee = $${paramIndex++}`;
         params.push(statut);
       }
 
-      query += ' LIMIT $3 OFFSET $4';
+      query += ` LIMIT $${paramIndex++} OFFSET $${paramIndex}`;
       params.push(limit, offset);
 
+      console.log('Executing query:', query, 'with params:', params);
       const { rows } = await pool.query(query, params);
+      console.log('Query result:', rows);
       return res.status(200).json(rows);
     } catch (error) {
-      console.error(error);
+      console.error('Error executing query:', error);
       return res.status(500).json({ error: 'Erreur serveur' });
     }
   } else if (req.method === 'POST') {
@@ -128,13 +131,15 @@ export default async function handler(req, res) {
     }
 
     try {
+      console.log('Inserting new tournee with:', { jour_preparation, jour_livraison });
       const { rows } = await pool.query(
         'INSERT INTO Tournee (jour_preparation, jour_livraison) VALUES ($1, $2) RETURNING *',
         [jour_preparation, jour_livraison]
       );
+      console.log('Insert result:', rows);
       return res.status(201).json(rows[0]);
     } catch (error) {
-      console.error(error);
+      console.error('Error inserting tournee:', error);
       return res.status(500).json({ error: 'Erreur serveur' });
     }
   } else {
