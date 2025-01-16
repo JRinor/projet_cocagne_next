@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:unit": "your-test-command"
+    "test:unit": "jest"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",
