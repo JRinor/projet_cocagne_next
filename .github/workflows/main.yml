@@ -28,9 +28,3 @@ jobs:
     - name: Build project
       run: npm run build
       working-directory: ./my-next-app
-
-    - name: Deploy to Vercel
-      run: npm run deploy
-      env:
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      working-directory: ./my-next-app
