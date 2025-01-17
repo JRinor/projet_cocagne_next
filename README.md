@@ -16,22 +16,33 @@ L'application utilise plusieurs technologies et outils pour le développement et
 - Docker
 - Docker Compose
 
+## Ports Utilisés
+
+L'application utilise les ports suivants :
+
+- **Application Web (Next.js)** : `3000`
+- **Base de Données (PostgreSQL)** : `5432`
+- **PgAdmin** : `5050`
+
+### Modifier les Ports
+
+Pour modifier les ports utilisés par les services, vous pouvez éditer le fichier `docker-compose.yml` à la racine du projet. Par exemple, pour changer le port de l'application web :
+
+```yaml
+services:
+  web:
+    ports:
+      - "3000:3000"  # Changez le port ici
+```
+
 ## Installation
 
-1. On clone le dépôt GitHub :
+On clone le dépôt GitHub :
     ```sh
     git clone https://github.com/JRinor/projet_cocagne_next.git
     cd projet_cocagne_next
     ```
-
-2. On crée un fichier `.env` à la racine du projet avec le contenu suivant :
-    ```properties
-    POSTGRES_PASSWORD=password123
-    PGADMIN_EMAIL=admin@example.com
-    PGADMIN_PASSWORD=admin
-    ```
     
-
 ## Lancer l'application
 
 1. On s'assure que Docker et Docker Compose sont installés sur votre machine.
@@ -39,6 +50,25 @@ L'application utilise plusieurs technologies et outils pour le développement et
     ```sh
     docker-compose up --build
     ```
+    
+Si l'application ne fonctionne pas correctement, essayez les commandes suivantes :
+    ```sh
+    docker-compose down -v
+    docker-compose up --build
+    ```
+
+Pour vous connecter à la base de données PostgreSQL via la ligne de commande, utilisez la commande suivante :
+    ```sh
+    docker exec -it db psql -U postgres -d jardins_cocagne
+    ```
+Pour vous connecter au serveur PostgreSQL via PgAdmin, on utilise les informations suivantes:
+
+- **Nom du serveur** : Votre choix (par exemple, "Projet Cocagne")
+- **Hôte** : `db`
+- **Port** : `5432`
+- **Nom de la base de données** : `jardins_cocagne`
+- **Nom d'utilisateur** : `postgres`
+- **Mot de passe** : `password123` (comme défini dans le fichier `.env`)
 
 ## Environnement Docker
 - **Service Web** : Utilise une image Node.js pour exécuter l'application Next.js. Le code source est monté dans le conteneur permettant un développement interactif.
