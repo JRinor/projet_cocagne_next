@@ -1,5 +1,21 @@
 # Projet jardins de cocagne
 
+
+## Table des matières
+1. [Introduction](#introduction)
+2. [Environnement de développement](#environnement-de-développement)
+3. [Prérequis](#prérequis)
+4. [Ports Utilisés](#ports-utilisés)
+5. [Installation](#installation)
+6. [Lancer l'application](#lancer-lapplication)
+7. [Environnement Docker](#environnement-docker)
+8. [Importer la base de données](#importer-la-base-de-données)
+9. [Accéder à l'application](#accéder-à-lapplication)
+10. [Pipeline CI](#pipeline-ci)
+11. [Endpoints de l'API](#endpoints-de-lapi)
+12. [Documentation Swagger](#documentation-swagger)
+13. [Importer les tests API dans Postman](#importer-les-tests-api-dans-postman)
+
 ## Introduction
 Projet jardins de cocagne pour la S.A.É. Développement avancé (S5.A.01).
  
