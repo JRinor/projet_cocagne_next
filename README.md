@@ -37,12 +37,19 @@ services:
 
 ## Installation
 
-On clone le dépôt GitHub :
-    ```
+1. On clone le dépôt GitHub :
+    ```sh
     git clone https://github.com/JRinor/projet_cocagne_next.git
     cd projet_cocagne_next
     ```
-    
+
+2. On crée un fichier `.env` à la racine du projet avec le contenu suivant :
+    ```properties
+    POSTGRES_PASSWORD=password123
+    PGADMIN_EMAIL=admin@example.com
+    PGADMIN_PASSWORD=admin
+    ```
+
 ## Lancer l'application
 
 1. On s'assure que Docker et Docker Compose sont installés sur votre machine.
@@ -50,25 +57,17 @@ On clone le dépôt GitHub :
     ```sh
     docker-compose up --build
     ```
-    
-Si l'application ne fonctionne pas correctement, essayez les commandes suivantes :
+
+    Si l'application ne fonctionne pas correctement, essayez les commandes suivantes :
     ```sh
     docker-compose down -v
     docker-compose up --build
     ```
 
-Pour vous connecter à la base de données PostgreSQL via la ligne de commande, utilisez la commande suivante :
+3. Pour vous connecter à la base de données PostgreSQL via la ligne de commande, utilisez la commande suivante :
     ```sh
     docker exec -it db psql -U postgres -d jardins_cocagne
     ```
-Pour vous connecter au serveur PostgreSQL via PgAdmin, on utilise les informations suivantes:
-
-- **Nom du serveur** : Votre choix (par exemple, "Projet Cocagne")
-- **Hôte** : `db`
-- **Port** : `5432`
-- **Nom de la base de données** : `jardins_cocagne`
-- **Nom d'utilisateur** : `postgres`
-- **Mot de passe** : `password123` (comme défini dans le fichier `.env`)
 
 ## Environnement Docker
 - **Service Web** : Utilise une image Node.js pour exécuter l'application Next.js. Le code source est monté dans le conteneur permettant un développement interactif.
