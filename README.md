@@ -77,6 +77,9 @@ services:
 ## Importer la base de données
 Pour importer la base de données, on ajoute notre fichier SQL d'initialisation dans `my-next-app/lib/init.sql`. Ce fichier sera exécuté automatiquement lors du démarrage du conteneur PostgreSQL.
 
+Le fichier SQL contient les tables nécessaires et des données d'insertion de test pour l'application.
+
+
 ## Accéder à l'application
 - **Application Web** : [http://localhost:3000](http://localhost:3000)
 - **PgAdmin** : [http://localhost:5050](http://localhost:5050)
@@ -135,3 +138,7 @@ Le pipeline CI utilise GitHub Actions pour automatiser les tests et la construct
 ## Documentation Swagger
 La documentation Swagger de l'API est disponible à l'adresse suivante :
 - **Swagger UI** : [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+
+## Importer les tests API dans Postman
+Un fichier JSON pour importer les tests API dans Postman est disponible :
+- **Test API Postman** : [Test_API_Postman.json](https://github.com/JRinor/projet_cocagne_next/blob/main/Test_API_Postman.json)
