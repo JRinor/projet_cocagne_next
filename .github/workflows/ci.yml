@@ -2,26 +2,40 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Set up Docker
-      run: |
-        docker-compose -f docker-compose.yml up -d --build
-        docker-compose exec web npm run lint
-        docker-compose exec web npm run test:unit
-        docker-compose exec web npm run test:e2e
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and start services
+      run: docker-compose up -d --build
+
+    - name: Run linter
+      run: docker-compose exec -T web npm run lint
+
+    - name: Run unit tests
+      run: docker-compose exec -T web npm run test:unit
+
+    - name: Run integration tests
+      run: docker-compose exec -T web npm run test:integration
+
+    - name: Run API tests
+      run: docker-compose exec -T web npm run test:api
+
+    - name: Run DB tests
+      run: docker-compose exec -T web npm run test:db
+
+    - name: Run security audit
+      run: docker-compose exec -T web npm run security:audit
 
     - name: Tear down Docker containers
       run: docker-compose down
