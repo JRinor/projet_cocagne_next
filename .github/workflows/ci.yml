@@ -25,6 +25,10 @@ jobs:
       run: npm install --legacy-peer-deps
       working-directory: ./my-next-app
 
+    - name: Install TypeScript
+      run: npm install typescript --save-dev
+      working-directory: ./my-next-app
+
     - name: Run lint
       run: npm run lint
       working-directory: ./my-next-app
