@@ -1,0 +1,21 @@
+name: Docker Build and Test
+
+on:
+  push:
+    paths:
+      - 'docker-compose.yml'
+      - '**/Dockerfile'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker
+      run: |
+        docker-compose build
+        docker-compose up -d
+        docker-compose exec web npm run test:unit
