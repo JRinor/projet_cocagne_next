@@ -16,27 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+    - name: Set up Docker
+      run: |
+        docker-compose -f docker-compose.yml up -d --build
+        docker-compose exec web npm run lint
+        docker-compose exec web npm run test:unit
+        docker-compose exec web npm run test:e2e
 
-    - name: Install dependencies
-      run: npm install --legacy-peer-deps
-      working-directory: ./my-next-app
-
-    - name: Install TypeScript
-      run: npm install typescript --save-dev
-      working-directory: ./my-next-app
-
-    - name: Run lint
-      run: npm run lint
-      working-directory: ./my-next-app
-
-    - name: Run unit tests
-      run: npm run test:unit
-      working-directory: ./my-next-app
-
-    - name: Run e2e tests
-      run: npm run test:e2e
-      working-directory: ./my-next-app
+    - name: Tear down Docker containers
+      run: docker-compose down
