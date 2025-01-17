@@ -38,7 +38,7 @@ services:
 ## Installation
 
 On clone le dépôt GitHub :
-    ```sh
+    ```
     git clone https://github.com/JRinor/projet_cocagne_next.git
     cd projet_cocagne_next
     ```
