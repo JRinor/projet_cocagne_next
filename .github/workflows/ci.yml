@@ -23,12 +23,16 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      working-directory: ./my-next-app
 
     - name: Run lint
       run: npm run lint
+      working-directory: ./my-next-app
 
     - name: Run unit tests
       run: npm run test:unit
+      working-directory: ./my-next-app
 
     - name: Run e2e tests
       run: npm run test:e2e
+      working-directory: ./my-next-app
