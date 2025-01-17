@@ -1,5 +1,34 @@
 import pool from 'lib/db';
 
+/**
+ * @swagger
+ * /points:
+ *   get:
+ *     summary: Récupérer tous les points de dépôt
+ *     tags: [Points]
+ *     responses:
+ *       200:
+ *         description: Liste des points de dépôt récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_pointdedepot:
+ *                     type: integer
+ *                   nom:
+ *                     type: string
+ *                   adresse:
+ *                     type: string
+ *                   latitude:
+ *                     type: number
+ *                   longitude:
+ *                     type: number
+ *       500:
+ *         description: Erreur serveur
+ */
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {

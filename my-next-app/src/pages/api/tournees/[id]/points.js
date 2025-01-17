@@ -1,5 +1,96 @@
 import pool from 'lib/db';
 
+/**
+ * @swagger
+ * /tournees/{id}/points:
+ *   get:
+ *     summary: Récupérer les points de dépôt d'une tournée
+ *     tags: [Tournees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la tournée
+ *     responses:
+ *       200:
+ *         description: Liste des points de dépôt récupérée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_pointdedepot:
+ *                     type: integer
+ *                   nom:
+ *                     type: string
+ *                   adresse:
+ *                     type: string
+ *                   latitude:
+ *                     type: number
+ *                   longitude:
+ *                     type: number
+ *                   numero_ordre:
+ *                     type: integer
+ *       404:
+ *         description: Aucun point de dépôt trouvé pour cette tournée
+ *       500:
+ *         description: Erreur serveur
+ *   post:
+ *     summary: Ajouter ou mettre à jour les points de dépôt d'une tournée
+ *     tags: [Tournees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la tournée
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 id_pointdedepot:
+ *                   type: integer
+ *                 numero_ordre:
+ *                   type: integer
+ *     responses:
+ *       200:
+ *         description: Points de dépôt mis à jour avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_pointdedepot:
+ *                     type: integer
+ *                   nom:
+ *                     type: string
+ *                   adresse:
+ *                     type: string
+ *                   latitude:
+ *                     type: number
+ *                   longitude:
+ *                     type: number
+ *                   numero_ordre:
+ *                     type: integer
+ *       400:
+ *         description: Les points doivent être un tableau
+ *       404:
+ *         description: La tournée avec l'ID spécifié n'existe pas
+ *       500:
+ *         description: Erreur serveur
+ */
 export default async function handler(req, res) {
   const { id } = req.query; // ID de la tournée
 
