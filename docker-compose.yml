@@ -1,10 +1,7 @@
-version: '3.8'
-
 services:
   web:
     build:
       context: ./my-next-app
-      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
@@ -19,7 +16,7 @@ services:
     command: npm run dev
 
   db:
-    image: postgres:15-alpine
+    image: postgres:15
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -36,7 +33,7 @@ services:
       - "5432:5432"
 
   pgadmin:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-adminpassword}
