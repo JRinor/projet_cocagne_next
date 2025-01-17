@@ -1,12 +1,13 @@
-name: CD
+name: Docker Build and Test
 
 on:
   push:
-    branches:
-      - production
+    paths:
+      - 'docker-compose.yml'
+      - '**/Dockerfile'
 
 jobs:
-  deploy:
+  docker:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +20,6 @@ jobs:
         docker-compose exec web npm run lint
         docker-compose exec web npm run test:unit
         docker-compose exec web npm run test:e2e
-
-    - name: Deploy to Vercel
-      run: npx vercel deploy --prod
-      env:
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     - name: Tear down Docker containers
       run: docker-compose down
