@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "9d62f8d8-fd8c-4a85-a33e-bdd45c49ef20",
+		"name": "Projet_Cocagne_Januzi_Mammeri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36237219"
+	},
+	"item": [
+		{
+			"name": "Utilisateurs",
+			"item": [
+				{
+					"name": "Connexion (Login)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/auth/login \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupération des informations utilisateur (Users)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNzM2NTA0MTg3LCJleHAiOjE3MzY1MDc3ODd9.GUKLXMGN_qpvLZ9HW8Uaya8c-Xz8CYTmg1WBjQDh8Vc"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"users"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET http://localhost:3000/api/auth/users \\\n-H \"Authorization: Bearer YOUR_JWT_TOKEN\""
+					},
+					"response": []
+				},
+				{
+					"name": "Inscription (Register)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Dupont\",\n  \"prenom\": \"Jean\",\n  \"email\": \"jean.dupontee@exameple.com\",\n  \"mot_de_passe\": \"password123\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/auth/register \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"nom\": \"Dupont\",\n  \"prenom\": \"Jean\",\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\",\n  \"role\": \"user\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Inscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Dupont\",\n  \"prenom\": \"Jean\",\n  \"email\": \"jean.dupdssont@example.com\",\n  \"mot_de_passe\": \"password123\",\n  \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/auth/register \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"nom\": \"Dupont\",\n  \"prenom\": \"Jean\",\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\",\n  \"role\": \"user\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Connexion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/auth/login \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"email\": \"jean.dupont@example.com\",\n  \"mot_de_passe\": \"password123\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupération des informations utilisateur",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6MSwiaWF0IjoxNzM2NTA0MTg3LCJleHAiOjE3MzY1MDc3ODd9.GUKLXMGN_qpvLZ9HW8Uaya8c-Xz8CYTmg1WBjQDh8Vc"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"users"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET http://localhost:3000/api/auth/users \\\n-H \"Authorization: Bearer YOUR_JWT_TOKEN\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tournee",
+			"item": [
+				{
+					"name": "Récupérer toutes les structures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/structures",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"structures"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET http://localhost:3000/api/structures"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer toutes les tournées",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tournees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET http://localhost:3000/api/tournees"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer le calendrier d'une tournée",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tournees/1/calendrier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees",
+								"1",
+								"calendrier"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET http://localhost:3000/api/tournees/1/calendrier"
+					},
+					"response": []
+				},
+				{
+					"name": "Créer une nouvelle tournée",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jour_preparation\": \"2023-10-01\",\n  \"jour_livraison\": \"2023-10-02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tournees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/tournees \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"jour_preparation\": \"2023-10-01\",\n  \"jour_livraison\": \"2023-10-02\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer les tournées par jour de livraison",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/tournees?jour_livraison=2023-10-02",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees"
+							],
+							"query": [
+								{
+									"key": "jour_livraison",
+									"value": "2023-10-02"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:3000/api/tournees?jour_livraison=2023-10-02\""
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter des points de dépôt à une tournée",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"points\": [\n    { \"ID_PointDeDepot\": 1, \"numero_ordre\": 1 },\n    { \"ID_PointDeDepot\": 2, \"numero_ordre\": 2 }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tournees/1/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees",
+								"1",
+								"points"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/tournees/1/points \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"points\": [\n    { \"ID_PointDeDepot\": 1, \"numero_ordre\": 1 },\n    { \"ID_PointDeDepot\": 2, \"numero_ordre\": 2 }\n  ]\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter ou mettre à jour un calendrier",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"jour_preparation\": \"2023-10-01\",\n  \"jour_livraison\": \"2023-10-02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/tournees/1/calendrier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"tournees",
+								"1",
+								"calendrier"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/tournees/1/calendrier \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"jour_preparation\": \"2023-10-01\",\n  \"jour_livraison\": \"2023-10-02\"\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Créer une commande",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id_abonnement\": 1,\n  \"id_point_de_depot\": 1,\n  \"quantite\": 2,\n  \"date_livraison\": \"2023-10-02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/commandes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"commandes"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/api/commandes \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"id_abonnement\": 1,\n  \"id_point_de_depot\": 1,\n  \"quantite\": 2,\n  \"date_livraison\": \"2023-10-02\"\n}'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test Lancement API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"hello"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:3000/api/hello"
+			},
+			"response": []
+		}
+	]
+}
