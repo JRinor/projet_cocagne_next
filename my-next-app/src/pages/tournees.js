@@ -11,9 +11,8 @@ const Tournees = () => {
   const [points, setPoints] = useState([]);
   const [newPoint, setNewPoint] = useState({ id_pointdedepot: '', numero_ordre: '' });
   const [error, setError] = useState('');
-  const [depots, setDepots] = useState([]); // Nouvel état pour les points de dépôt existants
+  const [depots, setDepots] = useState([]);
 
-  // Récupération des tournées au chargement de la page
   useEffect(() => {
     fetch('/api/tournees')
       .then(res => {
@@ -33,7 +32,6 @@ const Tournees = () => {
         console.error('Erreur lors de la récupération des tournées', error);
       });
 
-    // Récupération des points de dépôt existants
     fetch('/api/points')
       .then(res => {
         if (!res.ok) {
@@ -53,7 +51,6 @@ const Tournees = () => {
       });
   }, []);
 
-  // Sélection d'une tournée et récupération de ses points de dépôt
   const handleTourneeSelect = (id) => {
     fetch(`/api/tournees/${id}/points`)
       .then(res => {
@@ -71,7 +68,6 @@ const Tournees = () => {
       });
   };
 
-  // Ajout d'un nouveau point de dépôt à la tournée
   const handleAddPoint = () => {
     if (!newPoint.id_pointdedepot || !newPoint.numero_ordre) {
       setError('Tous les champs sont obligatoires');
@@ -102,7 +98,6 @@ const Tournees = () => {
       });
   };
 
-  // Gestion du glisser-déposer
   const handleDragEnd = (result) => {
     if (!result.destination) return;
 

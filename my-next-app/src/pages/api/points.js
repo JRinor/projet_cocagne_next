@@ -1,3 +1,4 @@
+// filepath: /c:/Users/victus/Documents/GitHub/projet_cocagne_3/my-next-app/src/pages/api/points.js
 import pool from 'lib/db';
 
 /**
