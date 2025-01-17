@@ -26,7 +26,7 @@ export default function MonEspace() {
   }, [router]);
 
   if (!user) {
-    return <div>Chargement...</div>;
+    return <div>Chargement....</div>;
   }
 
   return (
