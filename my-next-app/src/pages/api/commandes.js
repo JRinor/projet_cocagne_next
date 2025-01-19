@@ -96,42 +96,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: error.details[0].message });
     }
 
-    try {
-      const query = `
-        INSERT INTO Commande (ID_Abonnement, ID_PointDeDepot, quantite, date_commande, statut)
-        VALUES ($1, $2, $3, $4, $5) RETURNING *
-      `;
-      const { rows } = await pool.query(query, [id_abonnement, id_point_de_depot, quantite, date_livraison, statut || 'en attente']);
-      res.status(201).json(rows[0]);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Erreur lors de la création de la commande.' });
-    }
-  } else if (req.method === 'PUT') {
-    const { id_commande, statut } = req.body;
-
-    if (!id_commande || !statut) {
-      return res.status(400).json({ error: 'Les champs id_commande et statut sont requis.' });
+    const statutsValides = ['en attente', 'en cours', 'livrée', 'annulée'];
+    if (statut && !statutsValides.includes(statut)) {
+      return res.status(400).json({ error: 'Statut invalide' });
     }
 
     try {
       const query = `
-        UPDATE Commande
-        SET statut = $1
-        WHERE ID_Commande = $2
-        RETURNING *
-      `;
-      const { rows } = await pool.query(query, [statut, id_commande]);
-      if (rows.length === 0) {
-        return res.status(404).json({ error: 'Commande non trouvée.' });
-      }
-      res.status(200).json(rows[0]);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Erreur lors de la mise à jour de la commande.' });
-    }
-  } else {
-    res.setHeader('Allow', ['POST', 'PUT']);
-    res.status(405).end(`Méthode ${req.method} non autorisée.`);
-  }
-}

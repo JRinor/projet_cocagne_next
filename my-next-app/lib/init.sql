@@ -294,30 +294,30 @@ VALUES
     (2, 2);
 
 -- Insertion de points de dépôt
-INSERT INTO PointDeDepot (nom, adresse, latitude, longitude, ID_Structure)
+INSERT INTO PointDeDepot (ID_PointDeDepot, nom, adresse, latitude, longitude, ID_Structure)
 VALUES 
-    ('Eglise Saint Antoine', '12, rue Armand Colle, Epinal', 48.18333, 6.45, 1),
-    ('Ligue de l''enseignement', '15, rue Général de Reffye, Epinal', 48.1813164, 6.4334178, 1),
-    ('Centre Léo LaGrange', '6, Avenue Salvador Allende, Epinal', 48.1935933, 6.460096, 1),
-    ('APF', 'Local extérieur – ESAT – Rue de la papeterie, Dinozé', 48.1435, 6.46923, 1),
-    ('Ecodenn''ergie', '36, bis rue de la Plaine, Golbey', 48.19764, 6.43966, 1),
-    ('Botanic', 'Avenue des Terres St Jean, Golbey', 48.19764, 6.43966, 1),
-    ('Pharmacie Robert', '24, rue du Gal de Gaulle, St Nabord', 48.05171, 6.58248, 1),
-    ('Association AGACI', '26, Rue de la Joncherie, Remiremont', 48.0187639, 6.5939034, 1),
-    ('Office du tourisme', '6 Place C. Poncelet, Remiremont', 48.01754, 6.5882, 1),
-    ('Mr et Mme Boulassel', '1, rue Moncey, Docelles', 48.1467753, 6.6167044, 1),
-    ('Jardins de Cocagne', 'Prairie Claudel, Thaon', 48.2528634, 6.4268873, 1),
-    ('Madame Pierot', '15, Rue Ste Barbe, Charmes', 48.3776798, 6.2953624, 1),
-    ('3ème Rive Café Associatif', '15 rue du Maréchal Lyautey, Epinal', 48.18333, 6.45, 1),
-    ('Point Vert Mafra', 'Zac Barbazan, Bruyères', 49.15756, 2.32577, 1),
-    ('Pro et Cie', '45, Boulevard d''Alsace, Gérardmer', 48.073803, 6.8767334, 1),
-    ('M. Lecomte François', '24, route du Noirpré, Le Tholy', 48.0812336, 6.7452634, 1);
+    (1, 'Eglise Saint Antoine', '12, rue Armand Colle, Epinal', 48.18333, 6.45, 1),
+    (2, 'Ligue de l''enseignement', '15, rue Général de Reffye, Epinal', 48.1813164, 6.4334178, 1),
+    (3, 'Centre Léo LaGrange', '6, Avenue Salvador Allende, Epinal', 48.1935933, 6.460096, 1),
+    (4, 'APF', 'Local extérieur – ESAT – Rue de la papeterie, Dinozé', 48.1435, 6.46923, 1),
+    (5, 'Ecodenn''ergie', '36, bis rue de la Plaine, Golbey', 48.19764, 6.43966, 1),
+    (6, 'Botanic', 'Avenue des Terres St Jean, Golbey', 48.19764, 6.43966, 1),
+    (7, 'Pharmacie Robert', '24, rue du Gal de Gaulle, St Nabord', 48.05171, 6.58248, 1),
+    (8, 'Association AGACI', '26, Rue de la Joncherie, Remiremont', 48.0187639, 6.5939034, 1),
+    (9, 'Office du tourisme', '6 Place C. Poncelet, Remiremont', 48.01754, 6.5882, 1),
+    (10, 'Mr et Mme Boulassel', '1, rue Moncey, Docelles', 48.1467753, 6.6167044, 1),
+    (11, 'Jardins de Cocagne', 'Prairie Claudel, Thaon', 48.2528634, 6.4268873, 1),
+    (12, 'Madame Pierot', '15, Rue Ste Barbe, Charmes', 48.3776798, 6.2953624, 1),
+    (13, '3ème Rive Café Associatif', '15 rue du Maréchal Lyautey, Epinal', 48.18333, 6.45, 1),
+    (14, 'Point Vert Mafra', 'Zac Barbazan, Bruyères', 49.15756, 2.32577, 1),
+    (15, 'Pro et Cie', '45, Boulevard d''Alsace, Gérardmer', 48.073803, 6.8767334, 1),
+    (16, 'M. Lecomte François', '24, route du Noirpré, Le Tholy', 48.0812336, 6.7452634, 1);
 
 -- Insertion de tournées
-INSERT INTO Tournee (jour_preparation, jour_livraison, statut_tournee)
+INSERT INTO Tournee (ID_Tournee, jour_preparation, jour_livraison, statut_tournee)
 VALUES 
-    ('2025-01-15', '2025-01-16', 'préparée'),
-    ('2025-01-17', '2025-01-18', 'préparée');
+    (1, '2025-01-15', '2025-01-16', 'préparée'),
+    (2, '2025-01-17', '2025-01-18', 'préparée');
 
 -- Insertion dans la table de liaison Tournee_PointDeDepot
 INSERT INTO Tournee_PointDeDepot (ID_Tournee, ID_PointDeDepot, numero_ordre, ID_Statut)
@@ -326,7 +326,8 @@ VALUES
     (1, 2, 2, 1),
     (1, 3, 3, 1),
     (2, 4, 1, 1),
-    (2, 5, 2, 1);
+    (2, 5, 2, 1),
+    (2, 6, 3, 1);
 
 -- Insertion d'abonnements
 INSERT INTO Abonnement (ID_Adherent, ID_Panier, ID_Frequence, date_debut, date_fin, statut)

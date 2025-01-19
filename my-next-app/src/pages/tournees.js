@@ -1,194 +1,151 @@
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import 'leaflet/dist/leaflet.css';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-const Map = dynamic(() => import('../components/Map'), { ssr: false });
+import Map from '../components/Map';
 
 const Tournees = () => {
-  const [tournees, setTournees] = useState([]);
-  const [selectedTournee, setSelectedTournee] = useState(null);
-  const [points, setPoints] = useState([]);
-  const [newPoint, setNewPoint] = useState({ id_pointdedepot: '', numero_ordre: '' });
-  const [error, setError] = useState('');
-  const [depots, setDepots] = useState([]);
+  const [points, setPoints] = useState([]); // Points liés à la tournée en cours
+  const [allPoints, setAllPoints] = useState([]); // Tous les points de dépôt
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState(""); // Point sélectionné
+  const [itineraries, setItineraries] = useState({}); // Itinéraires par tournée
+  const [currentTournee, setCurrentTournee] = useState(null); // ID de la tournée en cours
 
+  // Charger tous les points de dépôt au chargement de la page
   useEffect(() => {
-    fetch('/api/tournees')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erreur lors de la récupération des tournées');
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setTournees(data);
-        } else {
-          console.error('La réponse de l\'API n\'est pas un tableau', data);
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des tournées', error);
-      });
+    const fetchAllPoints = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch('/api/all'); // Appel API pour récupérer tous les points
+        if (!response.ok) throw new Error('Erreur lors de la récupération des points de dépôt.');
+        const data = await response.json();
+        setAllPoints(data); // Stocker tous les points
+      } catch (err) {
+        console.error(err);
+        setError('Impossible de charger tous les points de dépôt.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    fetch('/api/points')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erreur lors de la récupération des points de dépôt');
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setDepots(data);
-        } else {
-          console.error('La réponse de l\'API n\'est pas un tableau', data);
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des points de dépôt', error);
-      });
+    fetchAllPoints();
   }, []);
 
-  const handleTourneeSelect = (id) => {
-    fetch(`/api/tournees/${id}/points`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erreur lors de la récupération des points de dépôt');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setSelectedTournee(id);
-        setPoints(Array.isArray(data) ? data : []);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des points de dépôt', error);
-      });
-  };
+  // Charger les points d'une tournée spécifique
+  const handleLoadTournee = async (tourneeId) => {
+    setLoading(true);
+    setError(null);
 
-  const handleAddPoint = () => {
-    if (!newPoint.id_pointdedepot || !newPoint.numero_ordre) {
-      setError('Tous les champs sont obligatoires');
+    // Sauvegarder l'itinéraire actuel avant de changer de tournée
+    if (currentTournee !== null) {
+      setItineraries((prevItineraries) => ({
+        ...prevItineraries,
+        [currentTournee]: points,
+      }));
+    }
+
+    // Vérifier si la tournée a déjà été chargée
+    if (itineraries[tourneeId]) {
+      setPoints(itineraries[tourneeId]);
+      setCurrentTournee(tourneeId);
+      setLoading(false);
       return;
     }
 
-    fetch(`/api/tournees/${selectedTournee}/points`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ points: [...points, newPoint] }),
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Erreur lors de l\'ajout du point de dépôt');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setPoints(data);
-        setNewPoint({ id_pointdedepot: '', numero_ordre: '' });
-        setError('');
-      })
-      .catch(error => {
-        console.error('Erreur lors de l\'ajout du point de dépôt', error);
-        setError('Erreur lors de l\'ajout du point de dépôt');
-      });
+    // Charger les points pour une nouvelle tournée
+    try {
+      const response = await fetch(`/api/tournees/${tourneeId}/points`);
+      if (!response.ok) throw new Error('Erreur lors de la récupération des points de la tournée.');
+      const data = await response.json();
+      setPoints(data);
+      setCurrentTournee(tourneeId); // Mettre à jour la tournée active
+    } catch (err) {
+      console.error('Erreur :', err);
+      setError('Impossible de charger les points de la tournée.');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
+  // Ajouter un point de dépôt sélectionné à l'itinéraire
+  const handleAddToItinerary = () => {
+    if (!selectedPoint || !currentTournee) return;
 
-    const reorderedPoints = Array.from(points);
-    const [movedPoint] = reorderedPoints.splice(result.source.index, 1);
-    reorderedPoints.splice(result.destination.index, 0, movedPoint);
+    // Trouver le point complet à partir de `allPoints`
+    const pointToAdd = allPoints.find((point) => point.nom === selectedPoint);
 
-    setPoints(reorderedPoints);
+    if (pointToAdd) {
+      // Vérifier si le point n'est pas déjà dans l'itinéraire
+      const alreadyInItinerary = points.some((p) => p.nom === pointToAdd.nom);
+      if (!alreadyInItinerary) {
+        setPoints((prevPoints) => [...prevPoints, pointToAdd]); // Ajouter le point
+      } else {
+        alert('Ce point est déjà dans l\'itinéraire.');
+      }
+    }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Gestion des Tournées</h1>
-      <div className="mb-6">
-        <label htmlFor="tournee" className="block text-lg font-medium text-gray-700 mb-2">Sélectionner une tournée</label>
-        <select
-          id="tournee"
-          className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-          onChange={(e) => handleTourneeSelect(e.target.value)}
+    <div className="bg-gray-900 text-white min-h-screen p-4 pt-40">
+      {/* Conteneur pour centrer les boutons */}
+      <div className="mb-6 flex justify-center space-x-8">
+        <button
+          onClick={() => handleLoadTournee(1)}
+          className="bg-red-600 text-white py-4 px-10 rounded-full hover:bg-red-700 transition duration-300 text-xl font-semibold"
         >
-          <option value="">Sélectionner une tournée</option>
-          {tournees.map(tournee => (
-            <option key={tournee.id_tournee} value={tournee.id_tournee}>
-              {tournee.jour_livraison}
-            </option>
-          ))}
-        </select>
+          Tournée 1
+        </button>
+        <button
+          onClick={() => handleLoadTournee(2)}
+          className="bg-green-600 text-white py-4 px-10 rounded-full hover:bg-green-700 transition duration-300 text-xl font-semibold"
+        >
+          Tournée 2
+        </button>
       </div>
-      {selectedTournee && (
+
+      {/* Erreur */}
+      {error && (
+        <div className="bg-black border border-black text-red-700 px-4 py-3 rounded mb-6">
+          {error}
+        </div>
+      )}
+
+      {/* Chargement */}
+      {loading && <div className="text-center py-4">Chargement...</div>}
+
+      {/* Carte des points de la tournée */}
+      <div className="w-full mt-6">
+        <h2 className="text-2xl font-bold mb-4">Carte des points de dépôt de la tournée</h2>
+        <Map points={points} />
+      </div>
+
+      {/* Liste déroulante pour tous les points de dépôt */}
+      {!loading && allPoints.length > 0 && (
         <div className="mt-6">
-          <Map points={points} />
-          <div className="mt-4">
-            <h2 className="text-xl font-bold mb-2">Ajouter un point de dépôt</h2>
-            {error && <p className="text-red-500">{error}</p>}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <select
-                value={newPoint.id_pointdedepot}
-                onChange={(e) => setNewPoint({ ...newPoint, id_pointdedepot: e.target.value })}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-              >
-                <option value="">Sélectionner un point de dépôt</option>
-                {depots.map(depot => (
-                  <option key={depot.id_pointdedepot} value={depot.id_pointdedepot}>
-                    {depot.nom}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder="Numéro d'ordre"
-                value={newPoint.numero_ordre}
-                onChange={(e) => setNewPoint({ ...newPoint, numero_ordre: e.target.value })}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-              />
-              <button
-                onClick={handleAddPoint}
-                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-              >
-                Ajouter
-              </button>
-            </div>
-          </div>
-          <div className="mt-6">
-            <h2 className="text-xl font-bold mb-2">Réorganiser les points de dépôt</h2>
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="points">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {points.map((point, index) => (
-                      point.id_pointdedepot && (
-                        <Draggable key={point.id_pointdedepot} draggableId={point.id_pointdedepot.toString()} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="bg-white p-4 mb-2 rounded-md shadow-md flex justify-between items-center"
-                            >
-                              <span>{point.nom}</span>
-                              <span>{point.numero_ordre}</span>
-                            </div>
-                          )}
-                        </Draggable>
-                      )
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
+          <label htmlFor="point-select" className="block text-lg font-semibold mb-2">
+            Points de dépôt disponibles :
+          </label>
+          <select
+            id="point-select"
+            className="w-full p-2 border border-gray-300 rounded-full mb-4 bg-black text-white"
+            value={selectedPoint}
+            onChange={(e) => setSelectedPoint(e.target.value)}
+          >
+            <option value="">-- Sélectionnez un point de dépôt --</option>
+            {allPoints.map((point) => (
+              <option key={point.nom} value={point.nom}>
+                {point.nom} - {point.adresse}
+              </option>
+            ))}
+          </select>
+
+          {/* Bouton pour ajouter le point à l'itinéraire */}
+          <button
+            onClick={handleAddToItinerary}
+            className="bg-purple-600 text-white py-2 px-6 rounded-full hover:bg-purple-700 transition duration-300"
+          >
+            Ajouter au trajet
+          </button>
         </div>
       )}
     </div>

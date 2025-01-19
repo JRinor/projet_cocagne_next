@@ -6,10 +6,19 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
       const { rows } = await pool.query(`
-        SELECT pd.ID_PointDeDepot, pd.nom, pd.adresse, pd.latitude, pd.longitude 
+        SELECT 
+          pd.ID_PointDeDepot, 
+          pd.nom, 
+          pd.adresse, 
+          pd.latitude, 
+          pd.longitude,
+          tpd.numero_ordre,
+          se.statut_nom as statut
         FROM PointDeDepot pd
         JOIN Tournee_PointDeDepot tpd ON pd.ID_PointDeDepot = tpd.ID_PointDeDepot
+        JOIN Statut_Etape se ON tpd.ID_Statut = se.ID_Statut
         WHERE tpd.ID_Tournee = $1
+        ORDER BY tpd.numero_ordre
       `, [tourneeId]);
       return res.status(200).json(rows);
     } catch (error) {

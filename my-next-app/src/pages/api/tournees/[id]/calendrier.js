@@ -129,6 +129,12 @@ export default async function handler(req, res) {
         .json({ error: 'Les champs jour_preparation et jour_livraison sont requis' });
     }
 
+    if (new Date(jour_preparation) >= new Date(jour_livraison)) {
+      return res.status(400).json({ 
+        error: 'La date de préparation doit être antérieure à la date de livraison' 
+      });
+    }
+
     try {
       const nextPreparationDate = await getNextAvailableDate(jour_preparation);
       const nextDeliveryDate = await getNextAvailableDate(jour_livraison);

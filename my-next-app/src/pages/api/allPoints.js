@@ -31,8 +31,17 @@ import pool from 'lib/db';
  */
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const { structure_id } = req.query;
     try {
-      const { rows } = await pool.query('SELECT * FROM PointDeDepot');
+      let query = 'SELECT * FROM PointDeDepot';
+      const params = [];
+      
+      if (structure_id) {
+        query += ' WHERE ID_Structure = $1';
+        params.push(structure_id);
+      }
+      
+      const { rows } = await pool.query(query, params);
       return res.status(200).json(rows);
     } catch (error) {
       console.error('Erreur lors de la récupération des points de dépôt', error);

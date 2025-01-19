@@ -25,7 +25,7 @@ export default function Header() {
   }, [isMenuOpen]);
 
   return (
-    <header className="absolute top-0 left-0 flex justify-between items-center px-8 py-4 w-full z-10 text-white font-serif bg-transparent">
+    <header className="fixed top-0 left-0 flex justify-between items-center px-8 py-4 w-full z-10 text-white font-serif bg-transparent">
       {/* Logo avec redirection vers l'accueil */}
       <div
         className="text-3xl font-bold cursor-pointer"
